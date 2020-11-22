@@ -1,7 +1,8 @@
 import React, {Fragment, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {setAlert} from "../../actions/alert";
+import {register} from "../../actions/auth";
 import {bindActionCreators} from 'redux'
 import PropTypes from 'prop-types';
 
@@ -22,8 +23,11 @@ const Register = (props) => {
         if (password !== password2) {
             props.setAlert('Password do not match', 'danger')
         } else {
-
+            props.register({name, email, password})
         }
+    }
+    if (props.isAutheticated) {
+        return <Redirect to="/dashboard"/>
     }
 
     return (
@@ -69,13 +73,22 @@ const Register = (props) => {
 }
 
 Register.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    isAutheticated: PropTypes.bool.isRequired,
+}
+
+const mapStateToProps = state => {
+    return ({
+        isAutheticated: state.auth.isAutheticated
+    })
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         setAlert: bindActionCreators(setAlert, dispatch),
+        register: bindActionCreators(register, dispatch),
     };
 };
 
-export default connect(null, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

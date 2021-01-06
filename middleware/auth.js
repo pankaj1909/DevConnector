@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const config = require('config')
+const config = require('../config/production')
 
 const authentication = (req, res, next) =>{
 
@@ -10,7 +10,7 @@ const authentication = (req, res, next) =>{
     }
 
     try{
-        const decoded = jwt.verify(token, config.get('jwtSecret'))
+        const decoded = jwt.verify(token, config.jwtSecret)
         req.user = decoded.user
         next()
     }catch (e) {

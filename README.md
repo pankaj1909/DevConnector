@@ -6,7 +6,13 @@ user can add any post which is visible to other developers and they can also add
 Technologies used:- 
 
 Backend: Node JS
+
+
 Middleware: Express JS
+
+
 Frontend: React JS
+
 State Management:- Redux Thunk
+
 Database:- Mongo DB
